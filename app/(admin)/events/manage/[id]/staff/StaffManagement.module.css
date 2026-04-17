@@ -1,0 +1,167 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.backLink {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+}
+
+.inviteSection {
+  margin-bottom: 4rem;
+  max-width: 600px;
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1rem;
+  padding-right: 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.loader {
+  position: absolute;
+  right: 1rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.resultsList {
+  margin-top: 1rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.resultItem {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.resultItem:last-child {
+  border-bottom: none;
+}
+
+.rosterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge[data-status="PENDING"] {
+  background: rgba(212, 175, 55, 0.15);
+  color: #D4AF37;
+}
+
+.badge[data-status="ACCEPTED"] {
+  background: rgba(94, 181, 87, 0.15);
+  color: #5EB557;
+}
+
+.badge[data-status="DECLINED"] {
+  background: rgba(192, 85, 106, 0.15);
+  color: #C0556A;
+}
+
+.dutyList {
+  margin-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 1rem;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 90%;
+  max-width: 500px;
+  padding: 2.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.formGroup input, .formGroup select {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modalActions button {
+  flex: 1;
+}

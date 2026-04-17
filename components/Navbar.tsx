@@ -23,33 +23,33 @@ export default function Navbar() {
   const toggleTheme = () => {
     setIsDark(!isDark);
     if (isDark) {
-      document.documentElement.style.setProperty('--bg-top', '#FFFFFF');
-      document.documentElement.style.setProperty('--bg-mid', '#FFECF2');
-      document.documentElement.style.setProperty('--bg-bottom', '#FCA1B9');
-      document.documentElement.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.6)');
-      document.documentElement.style.setProperty('--glass-border', 'rgba(252, 161, 185, 0.4)');
-      document.documentElement.style.setProperty('--glass-shadow', 'rgba(252, 161, 185, 0.2)');
-      document.documentElement.style.setProperty('--text-primary', '#2D142C');
-      document.documentElement.style.setProperty('--text-secondary', 'rgba(45, 20, 44, 0.7)');
-      document.documentElement.style.setProperty('--text-muted', 'rgba(45, 20, 44, 0.5)');
-      document.documentElement.style.setProperty('--btn-primary-bg', '#E12D6E');
+      document.documentElement.style.setProperty('--bg-top', '#FAF9F6');
+      document.documentElement.style.setProperty('--bg-mid', '#F0E6D2');
+      document.documentElement.style.setProperty('--bg-bottom', '#D4AF37');
+      document.documentElement.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.65)');
+      document.documentElement.style.setProperty('--glass-border', 'rgba(212, 175, 55, 0.4)');
+      document.documentElement.style.setProperty('--glass-shadow', 'rgba(0, 0, 0, 0.1)');
+      document.documentElement.style.setProperty('--text-primary', '#0A1128');
+      document.documentElement.style.setProperty('--text-secondary', 'rgba(10, 17, 40, 0.7)');
+      document.documentElement.style.setProperty('--text-muted', 'rgba(10, 17, 40, 0.5)');
+      document.documentElement.style.setProperty('--btn-primary-bg', '#800020');
       document.documentElement.style.setProperty('--btn-primary-text', '#FFFFFF');
-      document.documentElement.style.setProperty('--clover-light', '#5EB557');
-      document.documentElement.style.setProperty('--falling-item-fill', '#5EB557');
+      document.documentElement.style.setProperty('--clover-light', '#D4AF37');
+      document.documentElement.style.setProperty('--falling-item-fill', '#D4AF37');
     } else {
-      document.documentElement.style.setProperty('--bg-top', '#020014');
-      document.documentElement.style.setProperty('--bg-mid', '#0A0F2C');
-      document.documentElement.style.setProperty('--bg-bottom', '#1B2B5B');
-      document.documentElement.style.setProperty('--glass-bg', 'rgba(26, 16, 53, 0.4)');
-      document.documentElement.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.15)');
-      document.documentElement.style.setProperty('--glass-shadow', 'rgba(0, 0, 0, 0.4)');
-      document.documentElement.style.setProperty('--text-primary', '#FFFFFF');
-      document.documentElement.style.setProperty('--text-secondary', 'rgba(255, 255, 255, 0.8)');
-      document.documentElement.style.setProperty('--text-muted', 'rgba(255, 255, 255, 0.5)');
-      document.documentElement.style.setProperty('--btn-primary-bg', '#F28B5A');
-      document.documentElement.style.setProperty('--btn-primary-text', '#1A1035');
-      document.documentElement.style.setProperty('--clover-light', '#7BEA74');
-      document.documentElement.style.setProperty('--falling-item-fill', '#FFB7C5');
+      document.documentElement.style.setProperty('--bg-top', '#1A052D');
+      document.documentElement.style.setProperty('--bg-mid', '#2E0249');
+      document.documentElement.style.setProperty('--bg-bottom', '#570A57');
+      document.documentElement.style.setProperty('--glass-bg', 'rgba(26, 5, 45, 0.85)');
+      document.documentElement.style.setProperty('--glass-border', 'rgba(225, 173, 1, 0.35)');
+      document.documentElement.style.setProperty('--glass-shadow', 'rgba(0, 0, 0, 0.8)');
+      document.documentElement.style.setProperty('--text-primary', '#F8F1E1');
+      document.documentElement.style.setProperty('--text-secondary', 'rgba(248, 241, 225, 0.85)');
+      document.documentElement.style.setProperty('--text-muted', 'rgba(248, 241, 225, 0.55)');
+      document.documentElement.style.setProperty('--btn-primary-bg', '#E1AD01');
+      document.documentElement.style.setProperty('--btn-primary-text', '#1A052D');
+      document.documentElement.style.setProperty('--clover-light', '#FFDB58');
+      document.documentElement.style.setProperty('--falling-item-fill', '#E1AD01');
     }
   };
 
@@ -59,16 +59,21 @@ export default function Navbar() {
         {/* Brand */}
         <Link href="/" className={styles.brand}>
           <span className={styles.brandIcon}>⚜️</span>
-          <span className={styles.brandText}>Karyakram</span>
+          <span className={styles.brandText}>The Karyakram Manager</span>
         </Link>
 
         {/* Nav Links */}
         <div className={styles.links}>
           <Link href="/events" className={styles.link}>Events</Link>
-          
+
           {session ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-              {(session.user as any)?.role === 'ADMIN' || (session.user as any)?.role === 'HOST' ? (
+              <Link href="/tickets" className={styles.link}>My Tickets</Link>
+              <Link href="/alerts" className={styles.link}>Alerts</Link>
+              {(session.user as any)?.role === 'STAFF' && (
+                <Link href="/staff/duties" className={styles.link}>My Duties</Link>
+              )}
+              {(session.user as any)?.role === 'ADMIN' || (session.user as any)?.role === 'HOST' || (session.user as any)?.role === 'STAFF' ? (
                 <Link href="/dashboard" className={styles.link} style={{ color: 'var(--btn-primary-bg)', fontWeight: 600 }}>
                   Portal
                 </Link>
@@ -100,7 +105,7 @@ export default function Navbar() {
           aria-label="Toggle theme"
           title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         >
-          {isDark ? '☀️' : '🌙'}
+          {isDark ? '⚪️' : '⏾'}
         </button>
       </div>
     </nav>

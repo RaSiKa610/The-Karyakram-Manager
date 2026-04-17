@@ -35,13 +35,7 @@
 
 .brandIcon {
   font-size: 1.75rem;
-  animation: sway 4s ease-in-out infinite;
   display: inline-block;
-}
-
-@keyframes sway {
-  0%, 100% { transform: rotate(-8deg); }
-  50% { transform: rotate(8deg); }
 }
 
 .brandText {

@@ -10,15 +10,15 @@ export default async function DashboardPage() {
 
   // Fetch some stats from the database
   const myEventsCount = await prisma.event.count({
-    where: userRole === 'ADMIN' ? {} : { creatorId: userId }
+    where: (userRole === 'ADMIN' || userRole === 'STAFF') ? {} : { creatorId: userId }
   });
 
   const totalAttendees = await prisma.registration.count({
-    where: userRole === 'ADMIN' ? {} : { event: { creatorId: userId } }
+    where: (userRole === 'ADMIN' || userRole === 'STAFF') ? {} : { event: { creatorId: userId } }
   });
 
   const recentEvents = await prisma.event.findMany({
-    where: userRole === 'ADMIN' ? {} : { creatorId: userId },
+    where: (userRole === 'ADMIN' || userRole === 'STAFF') ? {} : { creatorId: userId },
     orderBy: { createdAt: 'desc' },
     take: 3
   });
@@ -30,9 +30,11 @@ export default async function DashboardPage() {
           <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Welcome back, {session?.user?.name?.split(' ')[0]}</h1>
           <p style={{ color: 'var(--text-secondary)' }}>Here&apos;s an overview of your karyakrams and metrics.</p>
         </div>
-        <Link href="/events/new" className="btn btn-primary">
-          + New Event
-        </Link>
+        {userRole !== 'STAFF' && (
+          <Link href="/events/new" className="btn btn-primary">
+            + New Event
+          </Link>
+        )}
       </header>
 
       {/* Stats Grid */}
@@ -63,8 +65,10 @@ export default async function DashboardPage() {
           <div className="glass-card" style={{ padding: '3rem', textAlign: 'center' }}>
             <span style={{ fontSize: '3rem', display: 'block', marginBottom: '1rem', opacity: 0.5 }}>📂</span>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>No events yet</h3>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>You haven&apos;t created any karyakrams.</p>
-            <Link href="/events/new" className="btn btn-primary" style={{ padding: '0.5rem 1.5rem', fontSize: '0.9rem' }}>Create your first event</Link>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>{userRole === 'STAFF' ? 'No royal duties assigned yet.' : "You haven't created any karyakrams."}</p>
+            {userRole !== 'STAFF' && (
+              <Link href="/events/new" className="btn btn-primary" style={{ padding: '0.5rem 1.5rem', fontSize: '0.9rem' }}>Create your first event</Link>
+            )}
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -78,9 +82,14 @@ export default async function DashboardPage() {
                   <span style={{ fontSize: '0.8rem', padding: '0.2rem 0.6rem', borderRadius: '12px', background: 'rgba(255,255,255,0.1)', color: 'var(--text-secondary)' }}>
                     {event.status}
                   </span>
-                  <Link href={`/events/manage/${event.id}`} className="btn btn-outline" style={{ padding: '0.4rem 1rem', fontSize: '0.85rem' }}>
-                    Manage
-                  </Link>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <Link href={`/events/${event.id}/map`} className="btn btn-outline" style={{ padding: '0.4rem 1rem', fontSize: '0.85rem', borderColor: 'var(--clover-green)', color: 'var(--clover-green)' }}>
+                      Live Map
+                    </Link>
+                    <Link href={`/events/manage/${event.id}`} className="btn btn-outline" style={{ padding: '0.4rem 1rem', fontSize: '0.85rem' }}>
+                      Manage
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}

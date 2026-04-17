@@ -17,7 +17,7 @@ export default async function AdminLayout({
 
   // Define allowed roles for the admin dashboard
   const userRole = (session.user as any)?.role;
-  const allowedRoles = ["ADMIN", "HOST"];
+  const allowedRoles = ["ADMIN", "HOST", "STAFF"];
 
   if (!allowedRoles.includes(userRole)) {
     // If attendee tries to access admin panel, kick them back to normal event page

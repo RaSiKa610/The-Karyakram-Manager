@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { name, category, venueName, venueAddress, date, startTime, endTime, totalCapacity } = body;
+    const { name, category, venueName, venueAddress, date, startTime, endTime, totalCapacity, latitude, longitude, zones } = body;
 
     // Basic validation
     if (!name || !category || !venueName || !venueAddress || !date || !startTime || !endTime || !totalCapacity) {
@@ -31,9 +31,11 @@ export async function POST(req: Request) {
 
     // Convert string times to actual Date objects for Prisma
     // Assuming date is YYYY-MM-DD and time is HH:MM
-    const startDateTime = new Date(`${date}T${startTime}:00Z`);
-    const endDateTime = new Date(`${date}T${endTime}:00Z`);
-    const eventDate = new Date(`${date}T00:00:00Z`);
+    // Convert string times to actual Date objects for Prisma
+    // Removing 'Z' to allow local-naive construction, matching host's intended time.
+    const startDateTime = new Date(`${date}T${startTime}:00`);
+    const endDateTime = new Date(`${date}T${endTime}:00`);
+    const eventDate = new Date(`${date}T00:00:00`);
 
     const newEvent = await prisma.event.create({
       data: {
@@ -41,12 +43,21 @@ export async function POST(req: Request) {
         category,
         venueName,
         venueAddress,
+        latitude,
+        longitude,
         date: eventDate,
         startTime: startDateTime,
         endTime: endDateTime,
         totalCapacity,
         creatorId,
         status: 'UPCOMING',
+        zones: {
+          create: zones.map((z: any) => ({
+            name: z.name,
+            capacity: z.capacity,
+            type: z.type,
+          }))
+        }
       }
     });
 

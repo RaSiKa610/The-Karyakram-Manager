@@ -1,8 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import FallingClovers from '@/components/FallingClovers';
 import Navbar from '@/components/Navbar';
 import { Providers } from '@/components/Providers';
+import RoyalDispatchListener from '@/components/RoyalDispatchListener';
 
 export const metadata: Metadata = {
   title: 'The Karyakram Manager',
@@ -14,8 +14,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Providers>
-          <FallingClovers />
           <Navbar />
+          <RoyalDispatchListener />
           <main style={{ position: 'relative', zIndex: 1, paddingTop: '80px' }}>
             {children}
           </main>

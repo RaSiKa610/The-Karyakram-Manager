@@ -24,25 +24,25 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* ROYAL DARK MODE (Midnight Blue, Gold, Deep Red) */
-    --bg-top: #050814; /* Void Blue */
-    --bg-mid: #0B1021; /* Midnight Blue */
-    --bg-bottom: #1B2B5B; /* Deep Indigo */
+    /* ROYAL VIOLET & MUSTARD DARK MODE */
+    --bg-top: #1A052D; 
+    --bg-mid: #2E0249; 
+    --bg-bottom: #570A57;
     
-    --clover-green: #D4AF37;
-    --clover-light: #FFD700; /* Pure Gold */
-    --falling-item-fill: #FFD700; /* Golden sparkles */
+    --clover-green: #E1AD01; /* Mustard Yellow */
+    --clover-light: #FFDB58; /* Mustard highlights */
+    --falling-item-fill: var(--clover-green);
     
-    --glass-bg: rgba(11, 16, 33, 0.55);
-    --glass-border: rgba(212, 175, 55, 0.25);
-    --glass-shadow: rgba(0, 0, 0, 0.5);
+    --glass-bg: rgba(26, 5, 45, 0.85);
+    --glass-border: rgba(225, 173, 1, 0.35);
+    --glass-shadow: rgba(0, 0, 0, 0.9);
     
-    --text-primary: #FAF9F6;
-    --text-secondary: rgba(250, 249, 246, 0.8);
-    --text-muted: rgba(250, 249, 246, 0.5);
+    --text-primary: #F8F1E1; /* Parchment White */
+    --text-secondary: rgba(248, 241, 241, 0.85);
+    --text-muted: rgba(248, 241, 241, 0.55);
 
-    --btn-primary-bg: #D4AF37; /* Royal Gold */
-    --btn-primary-text: #050814; /* Void text */
+    --btn-primary-bg: #E1AD01;
+    --btn-primary-text: #1A052D;
   }
 }
 
