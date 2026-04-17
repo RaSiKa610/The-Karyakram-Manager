@@ -1,46 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
 :root {
-  /* LIGHT MODE (White, Baby Pink, Rose Pink) */
-  --bg-top: #FFFFFF;
-  --bg-mid: #FFECF2; /* Baby pink */
-  --bg-bottom: #FCA1B9; /* Rose pink */
+  /* ROYAL LIGHT MODE (Ivory, Gold, Crimson) */
+  --bg-top: #FAF9F6; /* Ivory */
+  --bg-mid: #F0E6D2; /* Light Champagne */
+  --bg-bottom: #D4AF37; /* Soft Gold fade */
   
-  --clover-green: #3D8B37;
-  --clover-light: #5EB557;
+  --clover-green: #B8860B; /* Dark Gold/Bronze */
+  --clover-light: #D4AF37; /* Royal Gold */
+  --falling-item-fill: var(--clover-light);
   
-  --glass-bg: rgba(255, 255, 255, 0.6);
-  --glass-border: rgba(252, 161, 185, 0.4);
-  --glass-shadow: rgba(252, 161, 185, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(212, 175, 55, 0.4); /* Gold tint */
+  --glass-shadow: rgba(0, 0, 0, 0.1);
   
-  --text-primary: #2D142C;
-  --text-secondary: rgba(45, 20, 44, 0.7);
-  --text-muted: rgba(45, 20, 44, 0.5);
+  --text-primary: #0A1128; /* Deep Navy */
+  --text-secondary: rgba(10, 17, 40, 0.7);
+  --text-muted: rgba(10, 17, 40, 0.5);
 
-  --btn-primary-bg: #E12D6E; /* Deep rose pink */
+  --btn-primary-bg: #800020; /* Burgundy / Crimson */
   --btn-primary-text: #FFFFFF;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* DARK MODE (Dawn deep violet, purple, deep rose, peach) */
-    --bg-top: #1A1035;
-    --bg-mid: #4A2060;
-    --bg-bottom: #C0556A;
+    /* ROYAL DARK MODE (Midnight Blue, Gold, Deep Red) */
+    --bg-top: #050814; /* Void Blue */
+    --bg-mid: #0B1021; /* Midnight Blue */
+    --bg-bottom: #1B2B5B; /* Deep Indigo */
     
-    --clover-green: #40A83A;
-    --clover-light: #7BEA74;
+    --clover-green: #D4AF37;
+    --clover-light: #FFD700; /* Pure Gold */
+    --falling-item-fill: #FFD700; /* Golden sparkles */
     
-    --glass-bg: rgba(26, 16, 53, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-shadow: rgba(0, 0, 0, 0.4);
+    --glass-bg: rgba(11, 16, 33, 0.55);
+    --glass-border: rgba(212, 175, 55, 0.25);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
     
-    --text-primary: #FFFFFF;
-    --text-secondary: rgba(255, 255, 255, 0.8);
-    --text-muted: rgba(255, 255, 255, 0.5);
+    --text-primary: #FAF9F6;
+    --text-secondary: rgba(250, 249, 246, 0.8);
+    --text-muted: rgba(250, 249, 246, 0.5);
 
-    --btn-primary-bg: #F28B5A; /* Dawn peach */
-    --btn-primary-text: #1A1035;
+    --btn-primary-bg: #D4AF37; /* Royal Gold */
+    --btn-primary-text: #050814; /* Void text */
   }
 }
 
@@ -51,7 +53,8 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
   background: linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 40%, var(--bg-bottom) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
@@ -106,6 +109,12 @@ body {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
+h1, h2, h3, .brandText {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
 .btn-clover {
   background: var(--clover-green);
   color: white;
@@ -144,7 +153,7 @@ body {
 .clover {
   position: absolute;
   top: -10vh;
-  fill: var(--clover-light);
+  fill: var(--falling-item-fill);
   opacity: 0.7;
   animation: fall linear infinite;
   will-change: transform;

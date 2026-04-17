@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import styles from '../login/auth.module.css';
 
 export default function RegisterPage() {
@@ -9,6 +11,8 @@ export default function RegisterPage() {
     firstName: '', lastName: '', email: '', phone: '', password: '', role: 'ATTENDEE'
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,18 +21,50 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 800));
-    setLoading(false);
+    setError('');
+
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Registration failed');
+      }
+
+      // Auto login after registration
+      const loginRes = await signIn('credentials', {
+        redirect: false,
+        email: form.email,
+        password: form.password,
+      });
+
+      if (!loginRes?.error) {
+        router.push('/events');
+        router.refresh();
+      } else {
+        router.push('/login');
+      }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       <div className={`glass-card ${styles.card}`} style={{ maxWidth: 560 }}>
         <div className={styles.brand}>
-          <div className={styles.logoIcon}>🍀</div>
+          <div className={styles.logoIcon}>⚜️</div>
           <h1 className={styles.title}>Create Account</h1>
           <p className={styles.subtitle}>Join The Karyakram Manager</p>
         </div>
+
+        {error && <div className={styles.error}>{error}</div>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import styles from './auth.module.css';
 
 export default function LoginPage() {
@@ -10,14 +12,31 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    // Auth logic will connect here
-    await new Promise(r => setTimeout(r, 800));
-    setLoading(false);
-    setError('Database not yet connected. Please connect Supabase first.');
+    
+    try {
+      const res = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (res?.error) {
+        setError('Invalid email or password.');
+      } else {
+        router.push('/events');
+        router.refresh();
+      }
+    } catch (err) {
+      setError('An error occurred during login.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -25,7 +44,7 @@ export default function LoginPage() {
       <div className={`glass-card ${styles.card}`}>
         {/* Logo / Brand */}
         <div className={styles.brand}>
-          <div className={styles.logoIcon}>🍀</div>
+          <div className={styles.logoIcon}>⚜️</div>
           <h1 className={styles.title}>Welcome Back</h1>
           <p className={styles.subtitle}>The Karyakram Manager</p>
         </div>

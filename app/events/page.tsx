@@ -1,24 +1,18 @@
 import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
 
-export default function EventsPage() {
-  const events = [
-    {
-      id: "1",
-      name: "Global Tech & Sports Summit 2026",
-      date: "2026-06-15",
-      location: "Grand National Stadium, Metro City",
-      status: "Upcoming",
-      tags: ["Conference", "Sports"],
+// Ensure the page is dynamically rendered since it fetches live DB data
+export const dynamic = 'force-dynamic';
+
+export default async function EventsPage() {
+  const events = await prisma.event.findMany({
+    where: {
+      status: 'UPCOMING'
     },
-    {
-      id: "2",
-      name: "Summer Music Festival",
-      date: "2026-07-20",
-      location: "City Park Arena",
-      status: "Upcoming",
-      tags: ["Concert", "Music"],
+    orderBy: {
+      date: 'asc'
     }
-  ];
+  });
 
   return (
     <div className="min-h-screen pt-20 px-6 max-w-5xl mx-auto">
@@ -37,19 +31,17 @@ export default function EventsPage() {
              
              <div>
                <p style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                  📅 {event.date}
+                  📅 {event.date.toLocaleDateString()}
                </p>
                <p style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
-                  📍 {event.location}
+                  📍 {event.venueName}
                </p>
              </div>
 
              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: 'auto', paddingTop: '1rem' }}>
-                {event.tags.map(tag => (
-                  <span key={tag} style={{ backgroundColor: 'rgba(110,194,106,0.2)', color: 'var(--clover-light)', padding: '0.2rem 0.6rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 500 }}>
-                    {tag}
-                  </span>
-                ))}
+                <span style={{ backgroundColor: 'rgba(110,194,106,0.2)', color: 'var(--clover-light)', padding: '0.2rem 0.6rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 500 }}>
+                  {event.category}
+                </span>
              </div>
              
              <Link href={`/events/${event.id}`} style={{ textDecoration: 'none', marginTop: '1rem' }}>
