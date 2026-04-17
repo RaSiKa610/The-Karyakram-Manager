@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* LIGHT MODE (White, Baby Pink, Rose Pink) */
+  --bg-top: #FFFFFF;
+  --bg-mid: #FFECF2; /* Baby pink */
+  --bg-bottom: #FCA1B9; /* Rose pink */
+  
+  --clover-green: #3D8B37;
+  --clover-light: #5EB557;
+  
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(252, 161, 185, 0.4);
+  --glass-shadow: rgba(252, 161, 185, 0.2);
+  
+  --text-primary: #2D142C;
+  --text-secondary: rgba(45, 20, 44, 0.7);
+  --text-muted: rgba(45, 20, 44, 0.5);
+
+  --btn-primary-bg: #E12D6E; /* Deep rose pink */
+  --btn-primary-text: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* DARK MODE (Dawn deep violet, purple, deep rose, peach) */
+    --bg-top: #1A1035;
+    --bg-mid: #4A2060;
+    --bg-bottom: #C0556A;
+    
+    --clover-green: #40A83A;
+    --clover-light: #7BEA74;
+    
+    --glass-bg: rgba(26, 16, 53, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: rgba(0, 0, 0, 0.4);
+    
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --text-muted: rgba(255, 255, 255, 0.5);
+
+    --btn-primary-bg: #F28B5A; /* Dawn peach */
+    --btn-primary-text: #1A1035;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 40%, var(--bg-bottom) 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Glassmorphism Utilities */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 40px 0 var(--glass-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 50px 0 var(--glass-shadow);
+  border-color: var(--clover-light);
+}
+
+/* Base button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-clover {
+  background: var(--clover-green);
+  color: white;
+}
+
+.btn-clover:hover {
+  background: var(--clover-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(61, 139, 55, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--btn-primary-bg);
+  color: var(--btn-primary-bg);
+}
+
+.btn-outline:hover {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  transform: translateY(-2px);
+}
+
+/* Clover Animations */
+.clover-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.clover {
+  position: absolute;
+  top: -10vh;
+  fill: var(--clover-light);
+  opacity: 0.7;
+  animation: fall linear infinite;
+  will-change: transform;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(var(--rot-start)) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(110vh) rotate(var(--rot-end)) translateX(150px);
+    opacity: 0;
+  }
+}

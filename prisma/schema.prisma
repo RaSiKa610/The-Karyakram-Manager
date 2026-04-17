@@ -1,0 +1,165 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==========================================
+// MODULE 1: AUTHENTICATION & USER MANAGEMENT
+// ==========================================
+
+model User {
+  id               String   @id @default(uuid()) @map("user_id")
+  email            String   @unique
+  phone            String?  @unique
+  passwordHash     String   @map("password_hash")
+  firstName        String   @map("first_name")
+  lastName         String   @map("last_name")
+  profilePictureUrl String? @map("profile_picture_url")
+  role             String   @default("ATTENDEE") // ATTENDEE, STAFF, ADMIN, HOST, RESPONDER
+  
+  // Accessibility & Medical
+  accessibilityLanguage String? @map("accessibility_language")
+  emergencyContactName  String? @map("emergency_contact_name")
+  emergencyContactPhone String? @map("emergency_contact_phone")
+  medicalAllergies      String? @map("medical_allergies")
+  medicalMedications    String? @map("medical_medications")
+  
+  // Communication Prefs
+  pushPref  Boolean @default(true) @map("communication_preference_push")
+  smsPref   Boolean @default(false) @map("communication_preference_sms")
+  emailPref Boolean @default(true) @map("communication_preference_email")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  preferences    UserPreference?
+  createdEvents  Event[]         @relation("CreatedEvents")
+  registrations  Registration[]
+  checkIns       CheckIn[]
+}
+
+model UserPreference {
+  id                   String   @id @default(uuid()) @map("preference_id")
+  userId               String   @unique @map("user_id")
+  user                 User     @relation(fields: [userId], references: [id])
+  theme                String   @default("AUTO") // LIGHT, DARK, AUTO
+  fontSize             String   @default("medium") @map("font_size")
+  colorContrast        String   @default("normal") @map("color_contrast")
+  language             String   @default("en")
+  notificationFreq     String   @default("ALWAYS") @map("notification_frequency")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+}
+
+// ==========================================
+// MODULE 2: EVENT MANAGEMENT
+// ==========================================
+
+model Event {
+  id               String   @id @default(uuid()) @map("event_id")
+  name             String   @map("event_name")
+  description      String?  @map("event_description")
+  category         String   @map("event_category") // SPORTS, CONCERTS, CONFERENCES
+  venueName        String   @map("venue_name")
+  venueAddress     String   @map("venue_address")
+  date             DateTime @map("event_date")
+  startTime        DateTime @map("event_start_time")
+  endTime          DateTime @map("event_end_time")
+  totalCapacity    Int      @map("total_capacity")
+  currentAttendance Int     @default(0) @map("current_attendance")
+  status           String   @default("UPCOMING") // UPCOMING, ONGOING, COMPLETED, CANCELLED
+  bannerImageUrl   String?  @map("banner_image_url")
+  
+  creatorId        String   @map("created_by")
+  creator          User     @relation("CreatedEvents", fields: [creatorId], references: [id])
+  
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  zones          EventZone[]
+  schedules      EventSchedule[]
+  ticketTypes    TicketType[]
+  registrations  Registration[]
+  checkIns       CheckIn[]
+}
+
+model EventZone {
+  id               String   @id @default(uuid()) @map("zone_id")
+  eventId          String   @map("event_id")
+  event            Event    @relation(fields: [eventId], references: [id])
+  name             String   @map("zone_name")
+  capacity         Int
+  currentOccupancy Int      @default(0) @map("current_occupancy")
+  type             String   @map("zone_type") // SEATING, STANDING, VIP, ACCESSIBLE
+  isAccessible     Boolean  @default(false) @map("is_accessible")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+}
+
+model EventSchedule {
+  id           String   @id @default(uuid()) @map("schedule_id")
+  eventId      String   @map("event_id")
+  event        Event    @relation(fields: [eventId], references: [id])
+  activityName String   @map("activity_name")
+  startTime    DateTime @map("start_time")
+  endTime      DateTime @map("end_time")
+  description  String?
+  createdAt    DateTime @default(now()) @map("created_at")
+}
+
+// ==========================================
+// MODULE 3: REGISTRATION & TICKETING
+// ==========================================
+
+model TicketType {
+  id                String   @id @default(uuid()) @map("ticket_type_id")
+  eventId           String   @map("event_id")
+  event             Event    @relation(fields: [eventId], references: [id])
+  typeName          String   @map("type_name")
+  price             Float
+  quantityAvailable Int      @map("quantity_available")
+  quantitySold      Int      @default(0) @map("quantity_sold")
+  description       String?
+}
+
+model Registration {
+  id               String   @id @default(uuid()) @map("registration_id")
+  userId           String   @map("user_id")
+  user             User     @relation(fields: [userId], references: [id])
+  eventId          String   @map("event_id")
+  event            Event    @relation(fields: [eventId], references: [id])
+  ticketType       String   @map("ticket_type") // VIP, GENERAL, STANDING, ACCESSIBLE
+  quantity         Int      @default(1)
+  totalPrice       Float    @map("total_price")
+  status           String   @default("PENDING") // PENDING, APPROVED, REJECTED, WAITLISTED, CANCELLED
+  seatZone         String?  @map("seat_zone")
+  seatNumber       String?  @map("seat_number")
+  qrCodeUrl        String?  @map("qr_code_url")
+  registrationDate DateTime @default(now()) @map("registration_date")
+  approvalDate     DateTime? @map("approval_date")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  checkIns         CheckIn[]
+}
+
+// ==========================================
+// MODULE 4: CHECK-IN & CHECK-OUT
+// ==========================================
+
+model CheckIn {
+  id               String   @id @default(uuid()) @map("checkin_id")
+  registrationId   String   @map("registration_id")
+  registration     Registration @relation(fields: [registrationId], references: [id])
+  eventId          String   @map("event_id")
+  event            Event    @relation(fields: [eventId], references: [id])
+  userId           String   @map("user_id")
+  user             User     @relation(fields: [userId], references: [id])
+  timestamp        DateTime @default(now()) @map("checkin_timestamp")
+  gate             String?  @map("checkin_gate")
+  method           String   @default("QR_SCAN") @map("checkin_method") // QR_SCAN, MANUAL, BATCH
+}
