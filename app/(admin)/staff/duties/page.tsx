@@ -24,7 +24,7 @@ export default function StaffDutiesPage() {
     fetchDuties();
   }, []);
 
-  if (loading) return <div className="royal-loader">⚜️ Loading Duty Roster...</div>;
+  if (loading) return <div className="royal-loader">Loading Duty Roster...</div>;
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>

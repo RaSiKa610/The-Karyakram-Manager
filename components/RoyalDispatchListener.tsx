@@ -72,7 +72,7 @@ export default function RoyalDispatchListener() {
     switch (type) {
       case 'EMERGENCY': return { bg: '#800020', border: '#D4AF37', icon: '🚨', text: 'EMERGENCY DISPATCH' };
       case 'URGENT': return { bg: '#B8860B', border: '#FAF9F6', icon: '⚠️', text: 'URGENT DISPATCH' };
-      default: return { bg: 'rgba(8, 11, 18, 0.9)', border: 'var(--glass-border)', icon: '⚜️', text: 'MODERATE DISPATCH' };
+      default: return { bg: 'rgba(8, 11, 18, 0.9)', border: 'var(--glass-border)', icon: 'ℹ️', text: 'MODERATE DISPATCH' };
     }
   };
 

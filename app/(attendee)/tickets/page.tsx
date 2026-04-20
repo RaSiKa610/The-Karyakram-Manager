@@ -42,7 +42,7 @@ export default function TicketsPage() {
 
   if (loading) return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-      <div className="royal-loader">⚜️ Fetching Tickets...</div>
+      <div className="royal-loader">Fetching Tickets...</div>
     </div>
   );
 

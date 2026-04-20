@@ -44,7 +44,7 @@ export default function LoginPage() {
       <div className={`glass-card ${styles.card}`}>
         {/* Logo / Brand */}
         <div className={styles.brand}>
-          <div className={styles.logoIcon}>⚜️</div>
+          <div className={styles.logoIcon}></div>
           <h1 className={styles.title}>Welcome Back</h1>
           <p className={styles.subtitle}>The Karyakram Manager</p>
         </div>

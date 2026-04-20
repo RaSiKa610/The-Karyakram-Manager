@@ -23,7 +23,7 @@ export default function EventManagementHub() {
     fetchEvent();
   }, [id]);
 
-  if (loading) return <div style={{ textAlign: 'center', padding: '5rem' }}><div className="royal-loader">⚜️ Opening Hub...</div></div>;
+  if (loading) return <div style={{ textAlign: 'center', padding: '5rem' }}><div className="royal-loader">Opening Hub...</div></div>;
   if (!event) return <div style={{ textAlign: 'center', padding: '5rem' }}>Event not found</div>;
 
   return (

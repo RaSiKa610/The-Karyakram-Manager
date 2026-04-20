@@ -59,7 +59,7 @@ export default function EventMapDashboard() {
     return () => clearInterval(interval);
   }, [id]);
 
-  if (loading) return <div style={{ textAlign: 'center', padding: '5rem' }}><div className="royal-loader">⚜️ Preparing Royal Insight...</div></div>;
+  if (loading) return <div style={{ textAlign: 'center', padding: '5rem' }}><div className="royal-loader">Preparing Royal Insight...</div></div>;
 
   return (
     <div style={{ maxWidth: '1100px', margin: '0 auto' }}>

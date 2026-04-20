@@ -118,7 +118,7 @@ export default function StaffManagementPage() {
     }
   };
 
-  if (loading) return <div className="royal-loader">⚜️ Mobilizing Staff...</div>;
+  if (loading) return <div className="royal-loader">Mobilizing Staff...</div>;
 
   return (
     <div className={styles.container}>
@@ -140,7 +140,7 @@ export default function StaffManagementPage() {
               onChange={(e) => handleSearch(e.target.value)}
               className={styles.searchInput}
             />
-            {isSearching && <span className={styles.loader}>⚜️</span>}
+            {isSearching && <span className={styles.loader}></span>}
           </div>
           
           {searchResults.length > 0 && (

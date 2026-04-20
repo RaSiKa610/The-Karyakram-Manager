@@ -32,7 +32,7 @@ export default function StaffEventConsole() {
     return () => clearInterval(interval);
   }, [eventId]);
 
-  if (loading) return <div className="royal-loader">⚜️ Synchronizing With Command...</div>;
+  if (loading) return <div className="royal-loader">Synchronizing With Command...</div>;
   if (!data) return <div style={{ textAlign: 'center', padding: '5rem' }}>Access Denied or Event Not Found</div>;
 
   const { event, roster, myDuties, broadcasts } = data;
@@ -91,7 +91,7 @@ export default function StaffEventConsole() {
               ) : (
                 broadcasts.map((b: any) => (
                   <div key={b.id} style={{ padding: '1rem', borderBottom: '1px solid var(--glass-border)', display: 'flex', gap: '1rem' }}>
-                    <span>{b.type === 'EMERGENCY' ? '🚨' : '⚜️'}</span>
+                    <span>{b.type === 'EMERGENCY' ? '🚨' : 'ℹ️'}</span>
                     <div>
                       <p style={{ fontWeight: 500 }}>{b.message}</p>
                       <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{new Date(b.createdAt).toLocaleTimeString()}</span>

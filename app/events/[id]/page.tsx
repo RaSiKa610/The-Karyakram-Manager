@@ -58,7 +58,7 @@ export default function EventDetailsPage() {
 
   if (loading) return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-      <div className="royal-loader">⚜️ Loading...</div>
+      <div className="royal-loader">Loading...</div>
     </div>
   );
 

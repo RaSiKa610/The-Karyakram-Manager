@@ -59,7 +59,7 @@ export default function RegisterPage() {
     <div className={styles.container}>
       <div className={`glass-card ${styles.card}`} style={{ maxWidth: 560 }}>
         <div className={styles.brand}>
-          <div className={styles.logoIcon}>⚜️</div>
+          <div className={styles.logoIcon}></div>
           <h1 className={styles.title}>Create Account</h1>
           <p className={styles.subtitle}>Join The Karyakram Manager</p>
         </div>

@@ -58,7 +58,6 @@ export default function Navbar() {
       <div className={styles.inner}>
         {/* Brand */}
         <Link href="/" className={styles.brand}>
-          <span className={styles.brandIcon}>⚜️</span>
           <span className={styles.brandText}>The Karyakram Manager</span>
         </Link>
 

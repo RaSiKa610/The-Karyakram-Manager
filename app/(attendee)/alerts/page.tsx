@@ -46,7 +46,7 @@ export default function AlertsInbox() {
 
   if (loading) return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-      <div className="royal-loader">⚜️ Opening Royal Inbox...</div>
+      <div className="royal-loader">Opening Royal Inbox...</div>
     </div>
   );
 
@@ -133,7 +133,7 @@ export default function AlertsInbox() {
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ fontSize: '1.2rem' }}>{isEmergency ? '🚨' : isUrgent ? '⚠️' : '⚜️'}</span>
+                    <span style={{ fontSize: '1.2rem' }}>{isEmergency ? '🚨' : isUrgent ? '⚠️' : 'ℹ️'}</span>
                     <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', color: isEmergency ? '#ff4d4d' : 'var(--text-primary)' }}>
                       {dispatch.type} Dispatch
                     </span>
